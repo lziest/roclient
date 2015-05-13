@@ -35,14 +35,18 @@ func registerFlags() {
 	flag.StringVar(&labels, "labels", "", "comma separated labels")
 	flag.StringVar(&inPath, "in", "", "input data file")
 	flag.StringVar(&outPath, "out", "", "output data file")
+	flag.StringVar(&user, "user", "", "username")
+	flag.StringVar(&pswd, "password", "", "password")
 }
 
 func getUserCredentials() {
-	fmt.Print("Username:")
-	fmt.Scanf("%s", &user)
-	var err error
-	pswd, err = gopass.GetPass("Password:")
-	processError(err)
+	if user == "" || pswd == "" {
+		fmt.Print("Username:")
+		fmt.Scanf("%s", &user)
+		var err error
+		pswd, err = gopass.GetPass("Password:")
+		processError(err)
+	}
 }
 
 func processError(err error) {
